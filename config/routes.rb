@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   resources :posts do
     resources :comments
   end
-  devise_for :users
-  root to: 'home#index'
+  devise_for :users, controllers: {
+    sessions: 'users/sessions',
+    registrations: 'users/registrations'
+  }
+  root to: 'posts#index'
 end

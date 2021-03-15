@@ -3,8 +3,11 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all
+    @posts = Post.where(active: true)
   end
+
+  # SELECT * FROM users WHERE active = true;
+
 
   # GET /posts/1 or /posts/1.json
   def show
@@ -52,8 +55,10 @@ class PostsController < ApplicationController
     @post.active = false
 
     respond_to do |format|
-      format.html { redirect_to posts_url, notice: "Post was successfully destroyed." }
-      format.json { head :no_content }
+      if @post.save
+        format.html { redirect_to posts_url, notice: "Post was successfully destroyed." }
+        format.json { head :no_content }
+      end
     end
   end
 
